@@ -35,9 +35,11 @@
                 ]
             }
         ],
-        "items": [
+        "items":
+        [
             {
-                "meta": [
+                "meta":
+                [
                     {
                         "value": "evaluation",
                         "name": "type"
@@ -53,9 +55,15 @@
                     {
                         "value": "3",
                         "name": "childId"
+                    },
+                    {
+                        "value": "4",
+                        "name": "childId"
                     }
+
                 ],
-                "data": [
+                "data":
+                [
                     {
                         "prompt": "Id",
                         "name": "id",
@@ -92,7 +100,8 @@
                         "value": "2013-06-14T07:59:59Z"
                     }
                 ],
-                "links": [
+                "links":
+                [
                     {
                         "href": "https://uw.iasysdev.org/survey/136617",
                         "rel": "publishedto",
@@ -102,7 +111,8 @@
                 "href": "https://uw.iasysdev.org/api/v1/evaluation/136617"
             },
             {
-                "meta": [
+                "meta":
+                [
                     {
                         "value": "section",
                         "name": "type"
@@ -112,7 +122,8 @@
                         "value": "2"
                     }
                 ],
-                "data": [
+                "data":
+                [
                     {
                         "value": "18545",
                         "name": "instCourseId"
@@ -144,7 +155,8 @@
                 ]
             },
             {
-                "data": [
+                "data":
+                [
                     {
                         "name": "instInstructorId",
                         "value": "123456789"
@@ -158,7 +170,8 @@
                         "name": "lastName"
                     }
                 ],
-                "meta": [
+                "meta":
+                [
                     {
                         "name": "type",
                         "value": "instructor"
@@ -168,9 +181,36 @@
                         "value": "3"
                     }
                 ]
-            }
+            },
+            {   "meta":
+                [
+                    {
+                        "value": "4",
+                        "name": "id"
+                    },
+                    {
+                        "value" : "evaluation completion",
+                        "name" : "type"
+                    }
+                ],
+                 "data" :
+                [
+                    {
+                        "name" : "evaluationId",
+                        "value" : "136617"
+                    },
+                    {   "value" : "1033334",
+                        "name" : "studentId"
+                    },
+                    {
+                        "name" : "isCompleted",
+                         "value" : true
+                    }
+                ]
+           }
         ],
-        "links": [
+        "links":
+        [
             {
                 "rel": "home",
                 "prompt": "IASystem v1 Web API",
