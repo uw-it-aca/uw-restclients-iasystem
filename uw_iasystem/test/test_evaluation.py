@@ -1,7 +1,7 @@
 import datetime
 import pytz
 from django.test import TestCase
-from restclients.iasystem.evaluation import search_evaluations,\
+from uw_iasystem.evaluation import search_evaluations,\
     get_evaluation_by_id
 from restclients.test import fdao_ias_override, fdao_pws_override
 
