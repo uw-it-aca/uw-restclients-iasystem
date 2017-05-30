@@ -1,9 +1,7 @@
 import json
 import logging
-from django.conf import settings
 from uw_iasystem.dao import IASystem_DAO
-from restclients.dao_implementation.mock import get_mockdata_url
-from restclients.exceptions import DataFailureException
+from restclients_core.exceptions import DataFailureException
 
 
 logger = logging.getLogger(__name__)

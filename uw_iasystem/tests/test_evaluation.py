@@ -1,9 +1,10 @@
 import datetime
 import pytz
-from django.test import TestCase
+from unittest import TestCase
 from uw_iasystem.evaluation import search_evaluations,\
     get_evaluation_by_id
-from restclients.test import fdao_ias_override, fdao_pws_override
+from uw_iasystem.util import fdao_ias_override
+from uw_pws import fdao_pws_override
 
 
 @fdao_ias_override

@@ -15,17 +15,18 @@ VERSION = VERSION.replace("\n", "")
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='Uw-Restclients-IASystem',
+    name='UW-RestClients-IASystem',
     version=VERSION,
     packages=['uw_iasystem'],
     author="UW-IT AXDD",
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=['UW-RestClients-Core>0.8,<1.0',
-                      'pytz'
-                     ],
+                      'pytz',
+                      'UW-RestClients-PWS'
+                      ],
     license='Apache License, Version 2.0',
-    description=('A library for connecting to the Bridge API'),
+    description=('A library for connecting to the IASystem API'),
     long_description=README,
     url="https://github.com/uw-it-aca/uw-restclients-iasystem",
     classifiers=[
