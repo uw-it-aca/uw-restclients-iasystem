@@ -19,7 +19,8 @@ def IASystem_DAO(campus):
 
 class IASystem_UW_DAO(DAO):
     def service_name(self):
-        return 'iasystem_uw'
+        print os.path.join('iasystem', 'uw')
+        return os.path.join('iasystem', 'uw')
 
     def service_mock_paths(self):
         return [abspath(os.path.join(dirname(__file__), "resources"))]
@@ -27,7 +28,7 @@ class IASystem_UW_DAO(DAO):
 
 class IASystem_UWB_DAO(DAO):
     def service_name(self):
-        return 'iasystem_uwb'
+        return os.path.join('iasystem', 'uwb')
 
     def service_mock_paths(self):
         return [abspath(os.path.join(dirname(__file__), "resources"))]
@@ -35,7 +36,7 @@ class IASystem_UWB_DAO(DAO):
 
 class IASystem_UWT_DAO(DAO):
     def service_name(self):
-        return 'iasystem_uwt'
+        return os.path.join('iasystem', 'uwt')
 
     def service_mock_paths(self):
         return [abspath(os.path.join(dirname(__file__), "resources"))]
