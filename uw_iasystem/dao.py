@@ -6,11 +6,36 @@ import logging
 import os
 from os.path import abspath, dirname
 from restclients_core.dao import DAO
+from django.conf import settings
 
 
-class IASystem_DAO(DAO):
+def IASystem_DAO(campus):
+    return {
+        "seattle": IASystem_UW_DAO,
+        "bothell": IASystem_UWB_DAO,
+        "tacoma": IASystem_UWT_DAO
+    }[campus]()
+
+
+class IASystem_UW_DAO(DAO):
     def service_name(self):
-        return 'iasystem'
+        return 'iasystem_uw'
+
+    def service_mock_paths(self):
+        return [abspath(os.path.join(dirname(__file__), "resources"))]
+
+
+class IASystem_UWB_DAO(DAO):
+    def service_name(self):
+        return 'iasystem_uwb'
+
+    def service_mock_paths(self):
+        return [abspath(os.path.join(dirname(__file__), "resources"))]
+
+
+class IASystem_UWT_DAO(DAO):
+    def service_name(self):
+        return 'iasystem_uwt'
 
     def service_mock_paths(self):
         return [abspath(os.path.join(dirname(__file__), "resources"))]
