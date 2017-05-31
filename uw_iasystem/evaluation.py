@@ -3,7 +3,7 @@ Interfacing with the IASytem API, Evaluation resource.
 """
 import pytz
 import logging
-from restclients_core.utils import url_with_query
+from restclients_core.util import url_with_query
 from uw_iasystem import get_resource_by_campus
 from uw_iasystem.models import Evaluation
 from datetime import datetime
