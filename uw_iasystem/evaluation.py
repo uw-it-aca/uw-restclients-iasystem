@@ -3,10 +3,7 @@ Interfacing with the IASytem API, Evaluation resource.
 """
 import pytz
 import logging
-try:
-    from urllib import urlencode
-except ImportError:
-    from urllib.parse import urlencode
+from restclients_core.utils import url_with_query
 from uw_iasystem import get_resource_by_campus
 from uw_iasystem.models import Evaluation
 from datetime import datetime
@@ -24,7 +21,7 @@ def search_evaluations(campus, **kwargs):
     section_id
     student_id (student number)
     """
-    url = "%s?%s" % (IAS_PREFIX, urlencode(kwargs))
+    url = url_with_query(IAS_PREFIX, kwargs)
 
     data = get_resource_by_campus(url, campus)
     evaluations = _json_to_evaluation(data)
