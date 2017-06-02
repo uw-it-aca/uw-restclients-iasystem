@@ -24,17 +24,11 @@ class IASystem_UW_DAO(DAO):
         return [abspath(os.path.join(dirname(__file__), "resources"))]
 
 
-class IASystem_UWB_DAO(DAO):
+class IASystem_UWB_DAO(IASystem_UW_DAO):
     def service_name(self):
         return 'iasystem_uwb'
 
-    def service_mock_paths(self):
-        return [abspath(os.path.join(dirname(__file__), "resources"))]
 
-
-class IASystem_UWT_DAO(DAO):
+class IASystem_UWT_DAO(IASystem_UW_DAO):
     def service_name(self):
         return 'iasystem_uwt'
-
-    def service_mock_paths(self):
-        return [abspath(os.path.join(dirname(__file__), "resources"))]
