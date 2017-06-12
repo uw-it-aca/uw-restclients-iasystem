@@ -18,7 +18,7 @@ class Evaluation(models.Model):
         self.instructor_ids = []
 
     def __str__(self):
-        return "{%s: %d, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %0.6f}" % (
+        return "{%s: %d, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %s, %s: %0.6f, %s: %s}" % (
             "sln", self.section_sln,
             "eval_open_date", self.eval_open_date,
             "eval_close_date", self.eval_close_date,
@@ -26,7 +26,8 @@ class Evaluation(models.Model):
             "is_completed", self.is_completed,
             "report_url", self.eval_url,
             "report_available_date", self.report_available_date,
-            "response_rate", self.response_rate)
+            "response_rate", self.response_rate,
+            "delivery_method", self.delivery_method)
 
     def is_online(self):
         return (self.delivery_method == "Online")
