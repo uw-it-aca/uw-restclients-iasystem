@@ -118,15 +118,19 @@ def _get_child_ids(meta_data):
 
 
 def get_eval_url(data):
-    for item in data:
-        if item.get('rel') == "publishedto":
-            return item.get('href')
+    if data:
+        for item in data:
+            if item.get('rel') == "publishedto":
+                return item.get('href')
+    return None
 
 
 def get_report_url(data):
-    for item in data:
-        if item.get('rel') == "report":
-            return item.get('href')
+    if data:
+        for item in data:
+            if item.get('rel') == "report":
+                return item.get('href')
+    return None
 
 
 def get_value_by_name(list, name):

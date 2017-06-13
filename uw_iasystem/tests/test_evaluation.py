@@ -57,15 +57,15 @@ class IASystemTest(TestCase):
     def test_all_campuses(self):
         evals = search_evaluations("seattle", year=2014,
                                    term_name='Autumn', student_id=1033334)
-        self.assertEqual(len(evals), 2)
+        self.assertEqual(len(evals), 3)
 
         evals = search_evaluations("bothell", year=2014,
                                    term_name='Autumn', student_id=1033334)
-        self.assertEqual(len(evals), 2)
+        self.assertEqual(len(evals), 3)
 
         evals = search_evaluations("tacoma", year=2014,
                                    term_name='Autumn', student_id=1033334)
-        self.assertEqual(len(evals), 2)
+        self.assertEqual(len(evals), 3)
 
     def test_get_by_id(self):
         evals = get_evaluation_by_id(132136, "seattle")
