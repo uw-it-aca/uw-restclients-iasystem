@@ -19,7 +19,7 @@ after_script:
 - coveralls
 before_deploy:
 - find uw_iasystem/ -name \*.pyc -exec rm {} \;
-- echo $TRAVIS_TAG > uw_bridge/VERSION
+- echo $TRAVIS_TAG > uw_iasystem/VERSION
 deploy:
   provider: pypi
   server: https://pypi.python.org/pypi
