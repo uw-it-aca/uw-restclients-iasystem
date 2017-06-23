@@ -26,12 +26,15 @@ class Evaluation(models.Model):
     def json_data(self):
         return {
             "section_sln": self.section_sln,
-            "eval_open_date": str(self.eval_open_date),
-            "eval_close_date": str(self.eval_close_date),
+            "eval_open_date": (str(self.eval_open_date)
+                               if self.eval_open_date else None),
+            "eval_close_date": (str(self.eval_close_date)
+                                if self.eval_close_date else None),
             "eval_status": self.eval_status,
             "eval_url": self.eval_url,
             "report_url": self.report_url,
-            "report_available_date": str(self.report_available_date),
+            "report_available_date": (str(self.report_available_date)
+                                      if self.report_available_date else None),
             "response_rate": self.response_rate,
             "delivery_method": self.delivery_method,
             "is_completed": self.is_completed,
