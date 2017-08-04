@@ -1,6 +1,7 @@
 import datetime
 import pytz
 from unittest import TestCase
+from uw_iasystem.exceptions import TermEvalNotCreated
 from uw_iasystem.evaluation import search_evaluations,\
     get_evaluation_by_id
 from uw_iasystem.util import fdao_ias_override
@@ -159,3 +160,12 @@ class IASystemTest(TestCase):
                                            6, 59, 59,
                                            tzinfo=pytz.utc))
         self.assertTrue(evals[2].is_completed)
+
+    def test_search_eval_by_instructor(self):
+        try:
+            evals = search_evaluations("seattle",
+                                       year=2015,
+                                       term_name='Winter',
+                                       instructor_id=123456789)
+        except TermEvalNotCreated as ex:
+            self.assertEqual(ex.status, 400)

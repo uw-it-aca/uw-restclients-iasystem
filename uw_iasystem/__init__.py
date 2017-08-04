@@ -1,7 +1,8 @@
 import json
 import logging
-from uw_iasystem.dao import IASystem_DAO
 from restclients_core.exceptions import DataFailureException
+from uw_iasystem.dao import IASystem_DAO
+from uw_iasystem.exceptions import TermEvalNotCreated
 
 
 logger = logging.getLogger(__name__)
@@ -25,5 +26,13 @@ def get_resource(url, campus):
     if response.status != 200:
         logger.error("%s ==data==> %s" % (url, response.data))
         raise DataFailureException(url, response.status, response.data)
+
+    if '"error":' in response.data:
+        content = json.loads(response.data)
+        error_data = content.get('collection').get("error")
+        logger.error("%s ==data==> %s" % (url, error_data))
+        raise TermEvalNotCreated(url,
+                                 error_data.get("code"),
+                                 error_data.get("message"))
 
     return json.loads(response.data)
