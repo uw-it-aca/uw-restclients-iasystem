@@ -164,14 +164,14 @@ class IASystemTest(TestCase):
 
     def test_search_eval_by_instructor(self):
         evals = search_evaluations("seattle",
-                                   instructor_id=123456789,
+                                   year=2014,
                                    term_name='Autumn',
-                                   year=2014)
+                                   instructor_id=123456789)
         try:
             evals = search_evaluations("seattle",
-                                       instructor_id=123456789,
+                                       year=2015,
                                        term_name='Winter',
-                                       year=2015)
+                                       instructor_id=123456789)
         except TermEvalNotCreated as ex:
             self.assertEqual(ex.status, 400)
 
