@@ -749,7 +749,7 @@
             },
             {
                 "rel": "self",
-                "href": "https://uw.iasysdev.org/api/v1/evaluation?student_id=1230430&term_name=Autumn&year=2014",
+                "href": "https://uw.iasysdev.org/api/v1/evaluation?instructor_id=123456789&term_name=Autumn&year=2014",
                 "prompt": "IASystem Evaluation Listing"
             }
         ],
