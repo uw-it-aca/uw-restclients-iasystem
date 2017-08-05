@@ -20,19 +20,14 @@ def get_resource(url, campus):
     """
     headers = {"Accept": "application/vnd.collection+json"}
     response = IASystem_DAO(campus).getURL(url, headers)
-
-    logger.info("%s ==status==> %s" % (url, response.status))
-
-    if response.status != 200:
-        logger.error("%s ==data==> %s" % (url, response.data))
-        raise DataFailureException(url, response.status, response.data)
-
-    if '"error":' in response.data:
-        content = json.loads(response.data)
-        error_data = content.get('collection').get("error")
-        logger.error("%s ==data==> %s" % (url, error_data))
-        raise TermEvalNotCreated(url,
-                                 error_data.get("code"),
-                                 error_data.get("message"))
+    status = response.status
+    logger.info("%s ==status==> %s", url, status)
+    if status != 200:
+        message = response.data
+        logger.error("%s ==data==> %s", url, message)
+        if status == 400:
+            if "Term is out of range" in response.data:
+                raise TermEvalNotCreated(url, status, message)
+        raise DataFailureException(url, status, message)
 
     return json.loads(response.data)

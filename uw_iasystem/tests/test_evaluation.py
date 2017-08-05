@@ -1,6 +1,7 @@
 import datetime
 import pytz
 from unittest import TestCase
+from restclients_core.exceptions import DataFailureException
 from uw_iasystem.exceptions import TermEvalNotCreated
 from uw_iasystem.evaluation import search_evaluations,\
     get_evaluation_by_id
@@ -162,10 +163,22 @@ class IASystemTest(TestCase):
         self.assertTrue(evals[2].is_completed)
 
     def test_search_eval_by_instructor(self):
+        evals = search_evaluations("seattle",
+                                   instructor_id=123456789,
+                                   term_name='Autumn',
+                                   year=2014)
         try:
             evals = search_evaluations("seattle",
-                                       year=2015,
+                                       instructor_id=123456789,
                                        term_name='Winter',
-                                       instructor_id=123456789)
+                                       year=2015)
         except TermEvalNotCreated as ex:
             self.assertEqual(ex.status, 400)
+
+        try:
+            evals = search_evaluations("seattle",
+                                       year=2016,
+                                       term_name='Winter',
+                                       instructor_id=123456789)
+        except DataFailureException as ex:
+            self.assertEqual(ex.status, 500)

@@ -2,7 +2,7 @@
 "collection":{
    "links":[
        {"rel":"home","prompt":"IASystem v1 Web API","href":"https://uwb.iasystem.org/api/v1"},
-       {"prompt":"IASystem Evaluation Listing","href":"https://uwb.iasystem.org/api/v1/evaluation?year=2017&term_name=Autumn&curriculum_abbreviation=B+EDUC&course_number=442&section_id=A&instructor_id=123456789","rel":"self"}],
+       {"prompt":"IASystem Evaluation Listing","href":"https://uwb.iasystem.org/api/v1/evaluation?year=2016&term_name=Autumn&curriculum_abbreviation=B+EDUC&course_number=442&section_id=A&instructor_id=123456789","rel":"self"}],
    "queries":[
        {"rel":"collection filter",
        "href":"https://uwb.iasystem.org/api/v1/evaluation",
@@ -24,9 +24,9 @@
            {"prompt":"Instructor ID",
             "name":"instructor_id"}],
        "prompt":"Evaluation Search Resource"}],
-   "error":{"message":"The year and term_name parameters did not match an existing term.",
-            "title":"Term is out of range",
-            "code":400},
+   "error":{"message":"...",
+            "title":"Internal Server Error",
+            "code":500},
    "version":"1.0",
    "href":"https://uwb.iasystem.org/api/v1/evaluation"
    }
