@@ -1,7 +1,8 @@
 import json
 import logging
-from uw_iasystem.dao import IASystem_DAO
 from restclients_core.exceptions import DataFailureException
+from uw_iasystem.dao import IASystem_DAO
+from uw_iasystem.exceptions import TermEvalNotCreated
 
 
 logger = logging.getLogger(__name__)
@@ -19,11 +20,14 @@ def get_resource(url, campus):
     """
     headers = {"Accept": "application/vnd.collection+json"}
     response = IASystem_DAO(campus).getURL(url, headers)
-
-    logger.info("%s ==status==> %s" % (url, response.status))
-
-    if response.status != 200:
-        logger.error("%s ==data==> %s" % (url, response.data))
-        raise DataFailureException(url, response.status, response.data)
+    status = response.status
+    logger.info("%s ==status==> %s", url, status)
+    if status != 200:
+        message = response.data
+        logger.error("%s ==data==> %s", url, message)
+        if status == 400:
+            if "Term is out of range" in response.data:
+                raise TermEvalNotCreated(url, status, message)
+        raise DataFailureException(url, status, message)
 
     return json.loads(response.data)
