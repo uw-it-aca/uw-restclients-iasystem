@@ -4,7 +4,7 @@ from unittest import TestCase
 from restclients_core.exceptions import DataFailureException
 from uw_iasystem.exceptions import TermEvalNotCreated
 from uw_iasystem.evaluation import search_evaluations,\
-    get_evaluation_by_id
+    get_evaluation_by_id, get_domain
 from uw_iasystem.util import fdao_ias_override
 from uw_pws.util import fdao_pws_override
 
@@ -13,12 +13,30 @@ from uw_pws.util import fdao_pws_override
 @fdao_pws_override
 class IASystemTest(TestCase):
 
+    def test_get_domain(self):
+        self.assertEqual(
+            get_domain("https://uw.iasystem.org/api/v1/evaluation"), "uw")
+        self.assertEqual(
+            get_domain("https://uw.iasysdev.org/api/v1/evaluation"), "uw")
+        self.assertEqual(
+            get_domain("https://uwb.iasystem.org/api/v1/evaluation"), "uwb")
+        self.assertEqual(
+            get_domain("https://uwt.iasystem.org/api/v1/evaluation"), "uwt")
+        self.assertEqual(
+            get_domain(
+                "https://uweo-ap.iasystem.org/api/v1/evaluation"), "uweo-ap")
+        self.assertEqual(
+            get_domain(
+                "https://uweo-ielp.iasystem.org/api/v1/evaluation"),
+            "uweo-ielp")
+
     def test_search_eval(self):
         evals = search_evaluations("seattle",
                                    year=2014,
                                    term_name='Autumn',
                                    student_id=1033334)
         self.assertEqual(evals[0].section_sln, 15314)
+        self.assertTrue(evals[0].is_seattle())
         self.assertIsNotNone(evals[0].instructor_ids)
         self.assertEqual(len(evals[0].instructor_ids), 1)
         self.assertEqual(evals[0].instructor_ids[0], 851006409)
@@ -182,3 +200,24 @@ class IASystemTest(TestCase):
                                        instructor_id=123456789)
         except DataFailureException as ex:
             self.assertEqual(ex.status, 500)
+
+    def test_pce_evals_by_instructor(self):
+        evals = search_evaluations("pce",
+                                   year=2013,
+                                   term_name='Summer',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(evals)
+        self.assertEqual(evals[0].section_sln, 165165)
+        self.assertTrue(evals[0].is_eo_ap())
+
+        ielp_evals = search_evaluations("pce",
+                                   year=2013,
+                                   term_name='Summer',
+                                   curriculum_abbreviation='CSOC',
+                                   course_number=100,
+                                   section_id='A',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(ielp_evals)
+        self.assertIsNotNone(str(ielp_evals[0]))
+        self.assertEqual(ielp_evals[0].section_sln, 168569)
+        self.assertTrue(ielp_evals[0].is_eo_ielp())

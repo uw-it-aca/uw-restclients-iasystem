@@ -2,6 +2,13 @@ from restclients_core import models
 
 
 class Evaluation(models.Model):
+    DOMAIN_SEA = 'uw'
+    DOMAIN_BOT = 'uwb'
+    DOMAIN_TAC = 'uwt'
+    DOMAIN_EO_AP = 'uweo-ap'
+    DOMAIN_EO_IELP = 'uweo-ielp'
+
+    domain = models.CharField(max_length=16)
     section_sln = models.IntegerField()
     eval_open_date = models.DateTimeField()
     eval_close_date = models.DateTimeField()
@@ -23,8 +30,24 @@ class Evaluation(models.Model):
     def is_open(self):
         return (self.eval_status != "Closed")
 
+    def is_seattle(self):
+        return self.domain == Evaluation.DOMAIN_SEA
+
+    def is_bothell(self):
+        return self.domain == Evaluation.DOMAIN_BOT
+
+    def is_tacoma(self):
+        return self.domain == Evaluation.DOMAIN_TAC
+
+    def is_eo_ap(self):
+        return self.domain == Evaluation.DOMAIN_EO_AP
+
+    def is_eo_ielp(self):
+        return self.domain == Evaluation.DOMAIN_EO_IELP
+
     def json_data(self):
         return {
+            "domain": self.domain,
             "section_sln": self.section_sln,
             "eval_open_date": (str(self.eval_open_date)
                                if self.eval_open_date else None),
@@ -41,3 +64,6 @@ class Evaluation(models.Model):
             "is_open": self.is_open(),
             "is_online": self.is_online()
         }
+
+    def __str__(self):
+        return str(self.json_data())

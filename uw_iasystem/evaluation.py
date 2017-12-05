@@ -3,11 +3,12 @@ Interfacing with the IASytem API, Evaluation resource.
 """
 import pytz
 import logging
+import re
 try:
     from urllib import urlencode
 except ImportError:
     from urllib.parse import urlencode
-from uw_iasystem import get_resource_by_campus
+from uw_iasystem import get_resource
 from uw_iasystem.models import Evaluation
 from datetime import datetime
 
@@ -17,16 +18,22 @@ IAS_PREFIX = "/api/v1/evaluation"
 
 def search_evaluations(campus, **kwargs):
     """
-    year (required)
-    term_name (required): Winter|Spring|Summer|Autumn
-    curriculum_abbreviation
-    course_number
-    section_id
-    student_id (student number)
-    instructor_id (employee identification number)
+    campus: seattle, bothell, tacoma, pce, None
+
+    args:
+      year (required)
+      term_name (required): Winter|Spring|Summer|Autumn
+      curriculum_abbreviation
+      course_number
+      section_id
+      student_id (student number)
+      instructor_id (employee identification number)
+
+    returns:
+      a list of Evaluation objects
     """
     url = "%s?%s" % (IAS_PREFIX, urlencode(kwargs))
-    data = get_resource_by_campus(url, campus)
+    data = get_resource(url, campus)
     evaluations = _json_to_evaluation(data)
 
     return evaluations
@@ -34,7 +41,7 @@ def search_evaluations(campus, **kwargs):
 
 def get_evaluation_by_id(evaluation_id, campus):
     url = "%s/%s" % (IAS_PREFIX, evaluation_id)
-    return _json_to_evaluation(get_resource_by_campus(url, campus))
+    return _json_to_evaluation(get_resource(url, campus))
 
 
 def _json_to_evaluation(data):
@@ -57,6 +64,7 @@ def _json_to_evaluation(data):
             delivery_data = item.get('data')
 
             evaluation = Evaluation()
+            evaluation.domain = get_domain(item.get('href'))
             evaluation.eval_status = \
                 get_value_by_name(delivery_data, 'status')
             evaluation.eval_open_date = get_open_date(delivery_data)
@@ -77,6 +85,16 @@ def _json_to_evaluation(data):
             evaluations.append(evaluation)
 
     return evaluations
+
+
+DOMAIN_PATTERN = re.compile('^https://(uw[-a-z]*).iasys[a-z]+.org')
+
+
+def get_domain(data):
+    found = re.search(DOMAIN_PATTERN, data)
+    if found and found.group(1):
+        return found.group(1)
+    return None
 
 
 def get_section_sln(section):
