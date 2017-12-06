@@ -41,7 +41,7 @@ def __get_resource(dao, url):
         message = response.data
 
         if status == 404:
-            # the URL is not found in Iasystem
+            # the URL not exists on the specific domain
             return None
 
         if status == 400:
