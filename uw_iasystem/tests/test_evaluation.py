@@ -202,15 +202,35 @@ class IASystemTest(TestCase):
             self.assertEqual(ex.status, 500)
 
     def test_pce_evals_by_instructor(self):
-        evals = search_evaluations("pce",
+        pce_evals = search_evaluations("pce",
                                    year=2013,
                                    term_name='Summer',
                                    instructor_id=123456789)
-        self.assertIsNotNone(evals)
-        self.assertEqual(evals[0].section_sln, 165165)
-        self.assertTrue(evals[0].is_eo_ap())
+        self.assertIsNotNone(pce_evals)
+        self.assertEqual(pce_evals[0].section_sln, 165165)
+        self.assertTrue(pce_evals[0].is_eo_ap())
 
-        ielp_evals = search_evaluations("pce",
+        ap_evals = search_evaluations("pce_ol",
+                                   year=2013,
+                                   term_name='Summer',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(ap_evals)
+        self.assertEqual(ap_evals[0].section_sln, 165165)
+        self.assertTrue(ap_evals[0].is_eo_ap())
+
+        pce_evals = search_evaluations("pce",
+                                   year=2013,
+                                   term_name='Summer',
+                                   curriculum_abbreviation='CSOC',
+                                   course_number=100,
+                                   section_id='A',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(pce_evals)
+        self.assertIsNotNone(str(pce_evals[0]))
+        self.assertEqual(pce_evals[0].section_sln, 168569)
+        self.assertTrue(pce_evals[0].is_eo_ielp())
+
+        ielp_evals = search_evaluations("pce_ielp",
                                    year=2013,
                                    term_name='Summer',
                                    curriculum_abbreviation='CSOC',

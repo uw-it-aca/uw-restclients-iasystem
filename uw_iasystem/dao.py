@@ -49,8 +49,14 @@ DAO_DICT = {
     "seattle": [IASystem_UW_DAO()],
     "bothell": [IASystem_UWB_DAO()],
     "tacoma": [IASystem_UWT_DAO()],
+    "pce_ol": [IASystem_UWEO_AP_DAO()],
+    "pce_ielp": [IASystem_UWEO_IELP_DAO()],
     "pce": [IASystem_UWEO_AP_DAO(), IASystem_UWEO_IELP_DAO()]
     }
+# The pce domain list order matters.
+# Number of course evaluations for AU17:
+#   uweo-ap: 387
+#   uweo-ielp: 28
 
 
 def IASystem_DAO(campus):
