@@ -210,6 +210,14 @@ class IASystemTest(TestCase):
         self.assertEqual(pce_evals[0].section_sln, 165165)
         self.assertTrue(pce_evals[0].is_eo_ap())
 
+        ap_evals = search_evaluations("pce_ap",
+                                   year=2013,
+                                   term_name='Summer',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(ap_evals)
+        self.assertEqual(ap_evals[0].section_sln, 165165)
+        self.assertTrue(ap_evals[0].is_eo_ap())
+
         ap_evals = search_evaluations("pce_ol",
                                    year=2013,
                                    term_name='Summer',
