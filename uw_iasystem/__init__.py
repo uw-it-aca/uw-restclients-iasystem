@@ -9,9 +9,9 @@ from uw_iasystem.util.thread import ThreadWithResponse
 logger = logging.getLogger(__name__)
 
 
-def get_resource(url, campus):
+def get_resource(url, domain):
     threads = []
-    for dao in IASystem_DAO(campus):
+    for dao in IASystem_DAO(domain):
         t = ThreadWithResponse(target=__get_resource, args=(dao, url))
         t.start()
         threads.append((t, dao.service_name()))

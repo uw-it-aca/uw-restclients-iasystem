@@ -16,9 +16,10 @@ from datetime import datetime
 IAS_PREFIX = "/api/v1/evaluation"
 
 
-def search_evaluations(campus, **kwargs):
+def search_evaluations(domain, **kwargs):
     """
-    campus: seattle, bothell, tacoma, pce, None
+    domain: seattle, bothell, tacoma, pce_ap, pce_ol, pce_ielp, pce, None
+            (case insensitive)
 
     args:
       year (required)
@@ -33,15 +34,15 @@ def search_evaluations(campus, **kwargs):
       a list of Evaluation objects
     """
     url = "%s?%s" % (IAS_PREFIX, urlencode(kwargs))
-    data = get_resource(url, campus)
+    data = get_resource(url, domain)
     evaluations = _json_to_evaluation(data)
 
     return evaluations
 
 
-def get_evaluation_by_id(evaluation_id, campus):
+def get_evaluation_by_id(evaluation_id, domain):
     url = "%s/%s" % (IAS_PREFIX, evaluation_id)
-    return _json_to_evaluation(get_resource(url, campus))
+    return _json_to_evaluation(get_resource(url, domain))
 
 
 def _json_to_evaluation(data):

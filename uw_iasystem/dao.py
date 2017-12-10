@@ -60,7 +60,10 @@ DAO_DICT = {
 #   uweo-ielp: 28
 
 
-def IASystem_DAO(campus):
-    if campus is None:
+def IASystem_DAO(domain):
+    """
+    domain: course section's campus, LMS-owner for PCE courses.
+    """
+    if domain is None:
         return DAOs
-    return DAO_DICT[campus]
+    return DAO_DICT[domain.lower()]

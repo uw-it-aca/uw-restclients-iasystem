@@ -31,7 +31,7 @@ class IASystemTest(TestCase):
             "uweo-ielp")
 
     def test_search_eval(self):
-        evals = search_evaluations("seattle",
+        evals = search_evaluations("Seattle",
                                    year=2014,
                                    term_name='Autumn',
                                    student_id=1033334)
@@ -218,7 +218,7 @@ class IASystemTest(TestCase):
         self.assertEqual(ap_evals[0].section_sln, 165165)
         self.assertTrue(ap_evals[0].is_eo_ap())
 
-        ap_evals = search_evaluations("pce_ol",
+        ap_evals = search_evaluations("PCE_OL",
                                    year=2013,
                                    term_name='Summer',
                                    instructor_id=123456789)
@@ -238,7 +238,7 @@ class IASystemTest(TestCase):
         self.assertEqual(pce_evals[0].section_sln, 168569)
         self.assertTrue(pce_evals[0].is_eo_ielp())
 
-        ielp_evals = search_evaluations("pce_ielp",
+        ielp_evals = search_evaluations("PCE_IELP",
                                    year=2013,
                                    term_name='Summer',
                                    curriculum_abbreviation='CSOC',
