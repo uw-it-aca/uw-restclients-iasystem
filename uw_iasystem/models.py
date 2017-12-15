@@ -8,6 +8,18 @@ class Evaluation(models.Model):
     DOMAIN_EO_AP = 'uweo-ap'
     DOMAIN_EO_IELP = 'uweo-ielp'
 
+    # Delivery method:
+    ONLINE = "Online"
+    PAPER = "Paper"
+
+    # Online Status values:
+    PENDING = "Pending"
+    # an evaluation that has been created, but has not has not yet started
+    OPEN = "Open"
+    # an evaluation that has started and is in progress
+    CLOSED = "Closed"
+    # an evaluation that has been completed
+
     domain = models.CharField(max_length=16)
     section_sln = models.IntegerField()
     eval_open_date = models.DateTimeField()
@@ -25,10 +37,16 @@ class Evaluation(models.Model):
         self.instructor_ids = []
 
     def is_online(self):
-        return (self.delivery_method == "Online")
+        return (self.delivery_method == Evaluation.ONLINE)
+
+    def is_closed(self):
+        return (self.eval_status == Evaluation.CLOSED)
 
     def is_open(self):
-        return (self.eval_status != "Closed")
+        return (self.eval_status == Evaluation.OPEN)
+
+    def is_pending(self):
+        return (self.eval_status == Evaluation.PENDING)
 
     def is_seattle(self):
         return self.domain == Evaluation.DOMAIN_SEA
@@ -61,7 +79,9 @@ class Evaluation(models.Model):
             "response_rate": self.response_rate,
             "delivery_method": self.delivery_method,
             "is_completed": self.is_completed,
+            "is_closed": self.is_closed(),
             "is_open": self.is_open(),
+            "is_pending": self.is_pending(),
             "is_online": self.is_online()
         }
 

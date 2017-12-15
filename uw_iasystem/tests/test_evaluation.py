@@ -49,11 +49,23 @@ class IASystemTest(TestCase):
                                            7, 59, 59,
                                            tzinfo=pytz.utc))
         self.assertEqual(evals[0].eval_status, "Open")
+        self.assertTrue(evals[0].is_open())
         self.assertEqual(evals[0].eval_url,
                          "https://uw.iasysdev.org/survey/132068")
         self.assertIsNone(evals[0].is_completed)
+
         self.assertEqual(evals[1].eval_status, "Closed")
-        self.assertIsNone(evals[1].is_completed)
+        self.assertTrue(evals[1].is_closed())
+        self.assertFalse(evals[1].is_completed)
+
+        evals1 = search_evaluations("Seattle",
+                                   year=2013,
+                                   term_name='Spring',
+                                   curriculum_abbreviation='TRAIN',
+                                   course_number=100,
+                                   section_id='A',
+                                   student_id=1033334)
+        self.assertTrue(evals1[1].is_pending())
 
     def test_search_report(self):
         evals = search_evaluations("seattle",
@@ -221,11 +233,16 @@ class IASystemTest(TestCase):
         self.assertTrue(eval0.is_online)
         self.assertFalse(eval0.is_completed)
         self.assertEqual(eval0.eval_status, "Open")
+        self.assertTrue(eval0.is_open())
         self.assertEqual(eval0.response_rate, 0.0833333333333333)
-        self.assertEqual(str(eval0.report_available_date), '2013-09-08 07:00:00+00:00')
-        self.assertEqual(str(eval0.eval_close_date), '2013-08-26 06:59:59+00:00')
-        self.assertEqual(str(eval0.eval_open_date), '2013-08-15 07:00:00+00:00')
-        self.assertEqual(eval0.eval_url, "https://uweo-ap.iasystem.org/survey/19253")
+        self.assertEqual(str(eval0.report_available_date),
+                         '2013-09-08 07:00:00+00:00')
+        self.assertEqual(str(eval0.eval_close_date),
+                         '2013-08-26 06:59:59+00:00')
+        self.assertEqual(str(eval0.eval_open_date),
+                         '2013-08-15 07:00:00+00:00')
+        self.assertEqual(eval0.eval_url,
+                         "https://uweo-ap.iasystem.org/survey/19253")
         self.assertIsNone(eval0.report_url)
 
         ap_evals = search_evaluations("PCE_OL",
