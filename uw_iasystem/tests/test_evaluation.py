@@ -215,8 +215,18 @@ class IASystemTest(TestCase):
                                    term_name='Summer',
                                    instructor_id=123456789)
         self.assertIsNotNone(ap_evals)
-        self.assertEqual(ap_evals[0].section_sln, 165165)
-        self.assertTrue(ap_evals[0].is_eo_ap())
+        eval0 = ap_evals[0]
+        self.assertEqual(eval0.section_sln, 165165)
+        self.assertTrue(eval0.is_eo_ap())
+        self.assertTrue(eval0.is_online)
+        self.assertFalse(eval0.is_completed)
+        self.assertEqual(eval0.eval_status, "Open")
+        self.assertEqual(eval0.response_rate, 0.0833333333333333)
+        self.assertEqual(str(eval0.report_available_date), '2013-09-08 07:00:00+00:00')
+        self.assertEqual(str(eval0.eval_close_date), '2013-08-26 06:59:59+00:00')
+        self.assertEqual(str(eval0.eval_open_date), '2013-08-15 07:00:00+00:00')
+        self.assertEqual(eval0.eval_url, "https://uweo-ap.iasystem.org/survey/19253")
+        self.assertIsNone(eval0.report_url)
 
         ap_evals = search_evaluations("PCE_OL",
                                    year=2013,
