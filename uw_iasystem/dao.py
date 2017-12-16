@@ -40,11 +40,6 @@ class IASystem_UWEO_IELP_DAO(IASystem_UW_DAO):
         return SERVICE_PREFIX + Evaluation.DOMAIN_EO_IELP
 
 
-DAOs = [IASystem_UW_DAO(),
-        IASystem_UWB_DAO(),
-        IASystem_UWT_DAO(),
-        IASystem_UWEO_AP_DAO(),
-        IASystem_UWEO_IELP_DAO()]
 DAO_DICT = {
     "seattle": [IASystem_UW_DAO()],
     "bothell": [IASystem_UWB_DAO()],
@@ -63,7 +58,8 @@ DAO_DICT = {
 def IASystem_DAO(domain):
     """
     domain: course section's campus, LMS-owner for PCE courses.
+    exception: KeyError
     """
     if domain is None:
-        return DAOs
+        raise KeyError('IASystem_DAO: domain is None')
     return DAO_DICT[domain.lower()]

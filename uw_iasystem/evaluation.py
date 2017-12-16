@@ -18,9 +18,8 @@ IAS_PREFIX = "/api/v1/evaluation"
 
 def search_evaluations(domain, **kwargs):
     """
-    domain: seattle, bothell, tacoma, pce_ap, pce_ol, pce_ielp, pce, None
+    domain: seattle, bothell, tacoma, pce_ap, pce_ol, pce_ielp, pce
             (case insensitive)
-
     args:
       year (required)
       term_name (required): Winter|Spring|Summer|Autumn
@@ -29,7 +28,6 @@ def search_evaluations(domain, **kwargs):
       section_id
       student_id (student number)
       instructor_id (employee identification number)
-
     returns:
       a list of Evaluation objects
     """
