@@ -253,6 +253,9 @@ class IASystemTest(TestCase):
         self.assertEqual(ap_evals[0].section_sln, 165165)
         self.assertTrue(ap_evals[0].is_eo_ap())
 
+        data = ap_evals[0].json_data()
+        self.assertTrue(data['is_eo_ap'])
+
         ielp_evals = search_evaluations("PCE_IELP",
                                    year=2013,
                                    term_name='Summer',
@@ -266,6 +269,9 @@ class IASystemTest(TestCase):
         self.assertTrue(ielp_evals[0].is_eo_ielp())
         self.assertTrue(ielp_evals[0].is_pending())
 
+        data = ielp_evals[0].json_data()
+        self.assertTrue(data['is_eo_ielp'])
+
         pce_evals = search_evaluations("pce",
                                    year=2013,
                                    term_name='Summer',
@@ -277,4 +283,3 @@ class IASystemTest(TestCase):
         self.assertIsNotNone(str(pce_evals[0]))
         self.assertEqual(pce_evals[0].section_sln, 168569)
         self.assertTrue(pce_evals[0].is_eo_ielp())
-

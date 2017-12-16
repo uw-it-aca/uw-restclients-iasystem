@@ -82,7 +82,12 @@ class Evaluation(models.Model):
             "is_closed": self.is_closed(),
             "is_open": self.is_open(),
             "is_pending": self.is_pending(),
-            "is_online": self.is_online()
+            "is_online": self.is_online(),
+            "is_eo_ielp": self.is_eo_ielp(),
+            "is_eo_ap": self.is_eo_ap(),
+            "is_bothell": self.is_bothell(),
+            "is_seattle": self.is_seattle(),
+            "is_tacoma": self.is_tacoma()
         }
 
     def __str__(self):
