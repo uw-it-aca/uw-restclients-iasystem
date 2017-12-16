@@ -253,6 +253,19 @@ class IASystemTest(TestCase):
         self.assertEqual(ap_evals[0].section_sln, 165165)
         self.assertTrue(ap_evals[0].is_eo_ap())
 
+        ielp_evals = search_evaluations("PCE_IELP",
+                                   year=2013,
+                                   term_name='Summer',
+                                   curriculum_abbreviation='CSOC',
+                                   course_number=100,
+                                   section_id='A',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(ielp_evals)
+        self.assertIsNotNone(str(ielp_evals[0]))
+        self.assertEqual(ielp_evals[0].section_sln, 168569)
+        self.assertTrue(ielp_evals[0].is_eo_ielp())
+        self.assertTrue(ielp_evals[0].is_pending())
+
         pce_evals = search_evaluations("pce",
                                    year=2013,
                                    term_name='Summer',
@@ -265,14 +278,3 @@ class IASystemTest(TestCase):
         self.assertEqual(pce_evals[0].section_sln, 168569)
         self.assertTrue(pce_evals[0].is_eo_ielp())
 
-        ielp_evals = search_evaluations("PCE_IELP",
-                                   year=2013,
-                                   term_name='Summer',
-                                   curriculum_abbreviation='CSOC',
-                                   course_number=100,
-                                   section_id='A',
-                                   instructor_id=123456789)
-        self.assertIsNotNone(ielp_evals)
-        self.assertIsNotNone(str(ielp_evals[0]))
-        self.assertEqual(ielp_evals[0].section_sln, 168569)
-        self.assertTrue(ielp_evals[0].is_eo_ielp())
