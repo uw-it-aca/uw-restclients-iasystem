@@ -283,3 +283,9 @@ class IASystemTest(TestCase):
         self.assertIsNotNone(str(pce_evals[0]))
         self.assertEqual(pce_evals[0].section_sln, 168569)
         self.assertTrue(pce_evals[0].is_eo_ielp())
+
+        pce_evals = search_evaluations("pce",
+                                       year=2013,
+                                       term_name='Autumn',
+                                       instructor_id=123456789)
+        self.assertIsNone(pce_evals)
