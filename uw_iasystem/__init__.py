@@ -29,6 +29,7 @@ def get_resource(url, domain):
             raise t.exception
     return None
 
+
 def __get_resource(dao, url):
     """
     Issue a GET request to IASystem with the given url
