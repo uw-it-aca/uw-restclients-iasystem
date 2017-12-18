@@ -55,10 +55,8 @@ def _json_to_evaluation(data):
     if data is None:
         return None
 
-    collection_items = data.get('collection').get('items')
-    if collection_items is None:
-        return None
     evaluations = []
+    collection_items = data.get('collection').get('items')
     for item in collection_items:
         item_meta = item.get('meta')
         type = _get_item_type(item_meta)
