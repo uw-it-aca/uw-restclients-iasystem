@@ -52,6 +52,9 @@ def _json_to_evaluation(data):
     2) each co-instructor may be evaluated individually,
        with separate eval URLs.
     """
+    if data is None:
+        return None
+
     collection_items = data.get('collection').get('items')
     if collection_items is None:
         return None

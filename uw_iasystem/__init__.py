@@ -19,11 +19,15 @@ def get_resource(url, domain):
     for t, k in threads:
         t.join()
         if t.response is not None:
-            return t.response
+            data = t.response
+            if data.get('collection') and\
+               data.get('collection').get('items'):
+                return t.response
 
         if t.exception is not None:
             logger.error("%s: %s" % (k, t.exception))
             raise t.exception
+    return None
 
 
 def __get_resource(dao, url):
