@@ -4,8 +4,8 @@ from unittest import TestCase
 from restclients_core.exceptions import DataFailureException
 from uw_iasystem.exceptions import TermEvalNotCreated
 from uw_iasystem.evaluation import search_evaluations,\
-    get_evaluation_by_id
-from uw_iasystem.util import fdao_ias_override
+    get_evaluation_by_id, get_domain
+from uw_iasystem.tests import fdao_ias_override
 from uw_pws.util import fdao_pws_override
 
 
@@ -13,12 +13,30 @@ from uw_pws.util import fdao_pws_override
 @fdao_pws_override
 class IASystemTest(TestCase):
 
+    def test_get_domain(self):
+        self.assertEqual(
+            get_domain("https://uw.iasystem.org/api/v1/evaluation"), "uw")
+        self.assertEqual(
+            get_domain("https://uw.iasysdev.org/api/v1/evaluation"), "uw")
+        self.assertEqual(
+            get_domain("https://uwb.iasystem.org/api/v1/evaluation"), "uwb")
+        self.assertEqual(
+            get_domain("https://uwt.iasystem.org/api/v1/evaluation"), "uwt")
+        self.assertEqual(
+            get_domain(
+                "https://uweo-ap.iasystem.org/api/v1/evaluation"), "uweo-ap")
+        self.assertEqual(
+            get_domain(
+                "https://uweo-ielp.iasystem.org/api/v1/evaluation"),
+            "uweo-ielp")
+
     def test_search_eval(self):
-        evals = search_evaluations("seattle",
+        evals = search_evaluations("Seattle",
                                    year=2014,
                                    term_name='Autumn',
                                    student_id=1033334)
         self.assertEqual(evals[0].section_sln, 15314)
+        self.assertTrue(evals[0].is_seattle())
         self.assertIsNotNone(evals[0].instructor_ids)
         self.assertEqual(len(evals[0].instructor_ids), 1)
         self.assertEqual(evals[0].instructor_ids[0], 851006409)
@@ -31,11 +49,23 @@ class IASystemTest(TestCase):
                                            7, 59, 59,
                                            tzinfo=pytz.utc))
         self.assertEqual(evals[0].eval_status, "Open")
+        self.assertTrue(evals[0].is_open())
         self.assertEqual(evals[0].eval_url,
                          "https://uw.iasysdev.org/survey/132068")
         self.assertIsNone(evals[0].is_completed)
+
         self.assertEqual(evals[1].eval_status, "Closed")
-        self.assertIsNone(evals[1].is_completed)
+        self.assertTrue(evals[1].is_closed())
+        self.assertFalse(evals[1].is_completed)
+
+        evals1 = search_evaluations("Seattle",
+                                   year=2013,
+                                   term_name='Spring',
+                                   curriculum_abbreviation='TRAIN',
+                                   course_number=100,
+                                   section_id='A',
+                                   student_id=1033334)
+        self.assertTrue(evals1[1].is_pending())
 
     def test_search_report(self):
         evals = search_evaluations("seattle",
@@ -182,3 +212,74 @@ class IASystemTest(TestCase):
                                        instructor_id=123456789)
         except DataFailureException as ex:
             self.assertEqual(ex.status, 500)
+
+    def test_pce_evals_by_instructor(self):
+        pce_evals = search_evaluations("pce",
+                                   year=2013,
+                                   term_name='Summer',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(pce_evals)
+        self.assertEqual(pce_evals[0].section_sln, 165165)
+        self.assertTrue(pce_evals[0].is_eo_ap())
+
+        ap_evals = search_evaluations("pce_ap",
+                                   year=2013,
+                                   term_name='Summer',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(ap_evals)
+        eval0 = ap_evals[0]
+        self.assertEqual(eval0.section_sln, 165165)
+        self.assertTrue(eval0.is_eo_ap())
+        self.assertTrue(eval0.is_online)
+        self.assertFalse(eval0.is_completed)
+        self.assertEqual(eval0.eval_status, "Open")
+        self.assertTrue(eval0.is_open())
+        self.assertEqual(eval0.response_rate, 0.0833333333333333)
+        self.assertEqual(str(eval0.report_available_date),
+                         '2013-09-08 07:00:00+00:00')
+        self.assertEqual(str(eval0.eval_close_date),
+                         '2013-08-26 06:59:59+00:00')
+        self.assertEqual(str(eval0.eval_open_date),
+                         '2013-08-15 07:00:00+00:00')
+        self.assertEqual(eval0.eval_url,
+                         "https://uweo-ap.iasystem.org/survey/19253")
+        self.assertIsNone(eval0.report_url)
+
+        ap_evals = search_evaluations("PCE_OL",
+                                   year=2013,
+                                   term_name='Summer',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(ap_evals)
+        self.assertEqual(ap_evals[0].section_sln, 165165)
+        self.assertTrue(ap_evals[0].is_eo_ap())
+
+        data = ap_evals[0].json_data()
+        self.assertTrue(data['is_eo_ap'])
+
+        ielp_evals = search_evaluations("PCE_IELP",
+                                   year=2013,
+                                   term_name='Summer',
+                                   curriculum_abbreviation='CSOC',
+                                   course_number=100,
+                                   section_id='A',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(ielp_evals)
+        self.assertIsNotNone(str(ielp_evals[0]))
+        self.assertEqual(ielp_evals[0].section_sln, 168569)
+        self.assertTrue(ielp_evals[0].is_eo_ielp())
+        self.assertTrue(ielp_evals[0].is_pending())
+
+        data = ielp_evals[0].json_data()
+        self.assertTrue(data['is_eo_ielp'])
+
+        pce_evals = search_evaluations("pce",
+                                   year=2013,
+                                   term_name='Summer',
+                                   curriculum_abbreviation='CSOC',
+                                   course_number=100,
+                                   section_id='A',
+                                   instructor_id=123456789)
+        self.assertIsNotNone(pce_evals)
+        self.assertIsNotNone(str(pce_evals[0]))
+        self.assertEqual(pce_evals[0].section_sln, 168569)
+        self.assertTrue(pce_evals[0].is_eo_ielp())
