@@ -32,12 +32,12 @@ class IASystem_UWT_DAO(IASystem_UW_DAO):
 
 class IASystem_UWEO_AP_DAO(IASystem_UW_DAO):
     def service_name(self):
-        return SERVICE_PREFIX + Evaluation.DOMAIN_EO_AP
+        return SERVICE_PREFIX + Evaluation.DOMAIN_EO_AP.replace("-", "_")
 
 
 class IASystem_UWEO_IELP_DAO(IASystem_UW_DAO):
     def service_name(self):
-        return SERVICE_PREFIX + Evaluation.DOMAIN_EO_IELP
+        return SERVICE_PREFIX + Evaluation.DOMAIN_EO_IELP.replace("-", "_")
 
 
 DAO_DICT = {
