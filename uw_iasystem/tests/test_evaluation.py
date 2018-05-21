@@ -6,11 +6,9 @@ from uw_iasystem.exceptions import TermEvalNotCreated
 from uw_iasystem.evaluation import search_evaluations,\
     get_evaluation_by_id, get_domain
 from uw_iasystem.tests import fdao_ias_override
-from uw_pws.util import fdao_pws_override
 
 
 @fdao_ias_override
-@fdao_pws_override
 class IASystemTest(TestCase):
 
     def test_get_domain(self):
