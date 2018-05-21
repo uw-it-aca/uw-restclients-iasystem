@@ -5,13 +5,13 @@ python:
 - '3.6'
 before_script:
 - pip install -e .
-- pip install pep8
+- pip install pycodestyle
 - pip install nose2
 - pip install coverage
 - pip install commonconf
 - pip install python-coveralls
 script:
-- pep8 uw_iasystem/ --exclude=uw_iasystem/tests
+- pycodestyle uw_iasystem/ --exclude=uw_iasystem/tests
 - coverage run --source=uw_iasystem uw_iasystem/test.py -v
 after_script:
 - coveralls
