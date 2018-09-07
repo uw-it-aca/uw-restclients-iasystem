@@ -25,7 +25,7 @@ def get_resource(url, domain):
                 return t.response
 
         if t.exception is not None:
-            logger.error("%s: %s" % (k, t.exception))
+            logger.error("%s: %s", k, str(t.exception))
             raise t.exception
     return None
 
@@ -42,7 +42,7 @@ def __get_resource(dao, url):
     logger.debug("%s ==status==> %s", url, status)
 
     if status != 200:
-        message = response.data
+        message = str(response.data)
 
         if status == 404:
             # the URL not exists on the specific domain

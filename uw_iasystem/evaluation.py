@@ -4,10 +4,7 @@ Interfacing with the IASytem API, Evaluation resource.
 import pytz
 import logging
 import re
-try:
-    from urllib import urlencode
-except ImportError:
-    from urllib.parse import urlencode
+from urllib.parse import urlencode
 from uw_iasystem import get_resource
 from uw_iasystem.models import Evaluation
 from datetime import datetime
