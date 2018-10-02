@@ -28,7 +28,7 @@ def search_evaluations(domain, **kwargs):
     returns:
       a list of Evaluation objects
     """
-    url = "%s?%s" % (IAS_PREFIX, urlencode(kwargs))
+    url = "{}?{}".format(IAS_PREFIX, urlencode(kwargs))
     data = get_resource(url, domain)
     evaluations = _json_to_evaluation(data)
 
@@ -36,7 +36,7 @@ def search_evaluations(domain, **kwargs):
 
 
 def get_evaluation_by_id(evaluation_id, domain):
-    url = "%s/%s" % (IAS_PREFIX, evaluation_id)
+    url = "{}/{}".format(IAS_PREFIX, evaluation_id)
     return _json_to_evaluation(get_resource(url, domain))
 
 
