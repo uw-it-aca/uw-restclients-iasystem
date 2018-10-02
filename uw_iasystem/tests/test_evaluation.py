@@ -3,8 +3,8 @@ import pytz
 from unittest import TestCase
 from restclients_core.exceptions import DataFailureException
 from uw_iasystem.exceptions import TermEvalNotCreated
-from uw_iasystem.evaluation import search_evaluations,\
-    get_evaluation_by_id, get_domain
+from uw_iasystem.evaluation import (
+    search_evaluations, get_evaluation_by_id, get_domain)
 from uw_iasystem.tests import fdao_ias_override
 
 
@@ -57,12 +57,12 @@ class IASystemTest(TestCase):
         self.assertFalse(evals[1].is_completed)
 
         evals1 = search_evaluations("Seattle",
-                                   year=2013,
-                                   term_name='Spring',
-                                   curriculum_abbreviation='TRAIN',
-                                   course_number=100,
-                                   section_id='A',
-                                   student_id=1033334)
+                                    year=2013,
+                                    term_name='Spring',
+                                    curriculum_abbreviation='TRAIN',
+                                    course_number=100,
+                                    section_id='A',
+                                    student_id=1033334)
         self.assertTrue(evals1[1].is_pending())
 
     def test_search_report(self):
@@ -213,17 +213,17 @@ class IASystemTest(TestCase):
 
     def test_pce_evals_by_instructor(self):
         pce_evals = search_evaluations("pce",
-                                   year=2013,
-                                   term_name='Summer',
-                                   instructor_id=123456789)
+                                       year=2013,
+                                       term_name='Summer',
+                                       instructor_id=123456789)
         self.assertIsNotNone(pce_evals)
         self.assertEqual(pce_evals[0].section_sln, 165165)
         self.assertTrue(pce_evals[0].is_eo_ap())
 
         ap_evals = search_evaluations("pce_ap",
-                                   year=2013,
-                                   term_name='Summer',
-                                   instructor_id=123456789)
+                                      year=2013,
+                                      term_name='Summer',
+                                      instructor_id=123456789)
         self.assertIsNotNone(ap_evals)
         eval0 = ap_evals[0]
         self.assertEqual(eval0.section_sln, 165165)
@@ -244,9 +244,9 @@ class IASystemTest(TestCase):
         self.assertIsNone(eval0.report_url)
 
         ap_evals = search_evaluations("PCE_OL",
-                                   year=2013,
-                                   term_name='Summer',
-                                   instructor_id=123456789)
+                                      year=2013,
+                                      term_name='Summer',
+                                      instructor_id=123456789)
         self.assertIsNotNone(ap_evals)
         self.assertEqual(ap_evals[0].section_sln, 165165)
         self.assertTrue(ap_evals[0].is_eo_ap())
@@ -255,12 +255,12 @@ class IASystemTest(TestCase):
         self.assertTrue(data['is_eo_ap'])
 
         ielp_evals = search_evaluations("PCE_IELP",
-                                   year=2013,
-                                   term_name='Summer',
-                                   curriculum_abbreviation='CSOC',
-                                   course_number=100,
-                                   section_id='A',
-                                   instructor_id=123456789)
+                                        year=2013,
+                                        term_name='Summer',
+                                        curriculum_abbreviation='CSOC',
+                                        course_number=100,
+                                        section_id='A',
+                                        instructor_id=123456789)
         self.assertIsNotNone(ielp_evals)
         self.assertIsNotNone(str(ielp_evals[0]))
         self.assertEqual(ielp_evals[0].section_sln, 168569)
@@ -271,12 +271,12 @@ class IASystemTest(TestCase):
         self.assertTrue(data['is_eo_ielp'])
 
         pce_evals = search_evaluations("pce",
-                                   year=2013,
-                                   term_name='Summer',
-                                   curriculum_abbreviation='CSOC',
-                                   course_number=100,
-                                   section_id='A',
-                                   instructor_id=123456789)
+                                       year=2013,
+                                       term_name='Summer',
+                                       curriculum_abbreviation='CSOC',
+                                       course_number=100,
+                                       section_id='A',
+                                       instructor_id=123456789)
         self.assertIsNotNone(pce_evals)
         self.assertIsNotNone(str(pce_evals[0]))
         self.assertEqual(pce_evals[0].section_sln, 168569)

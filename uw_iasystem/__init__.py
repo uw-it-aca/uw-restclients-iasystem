@@ -25,7 +25,7 @@ def get_resource(url, domain):
                 return t.response
 
         if t.exception is not None:
-            logger.error("%s: %s", k, str(t.exception))
+            logger.error("{}: {}".format(k, str(t.exception)))
             raise t.exception
     return None
 
@@ -39,7 +39,7 @@ def __get_resource(dao, url):
     headers = {"Accept": "application/vnd.collection+json"}
     response = dao.getURL(url, headers)
     status = response.status
-    logger.debug("%s ==status==> %s", url, status)
+    logger.debug("{} ==status==> {}".format(url, status))
 
     if status != 200:
         message = str(response.data)
