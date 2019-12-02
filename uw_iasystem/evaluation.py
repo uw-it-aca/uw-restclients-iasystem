@@ -1,9 +1,9 @@
 """
 Interfacing with the IASytem API, Evaluation resource.
 """
-import pytz
 import logging
 import re
+from dateutil.parser import parse
 from urllib.parse import urlencode
 from uw_iasystem import get_resource
 from uw_iasystem.models import Evaluation
@@ -183,17 +183,7 @@ def get_response_rate(data):
     return float(str(response_rate) if response_rate else '0')
 
 
-def get_is_online(data):
-    if get_value_by_name(data, 'deliveryMethod') == "Online":
-        return True
-    return False
-
-
 def _datetime_from_string(date_string):
-    if date_string:
-        date_format = "%Y-%m-%dT%H:%M:%S"
-        date_string = date_string.replace("Z", "")
-        date = datetime.strptime(date_string, date_format)
-        return pytz.utc.localize(date)
-
+    if date_string is not None and len(date_string):
+        return parse(date_string)
     return ""

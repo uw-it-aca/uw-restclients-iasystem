@@ -22,6 +22,7 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=['UW-RestClients-Core>1.0,<2.0',
+                      'python-dateutil',
                       'pytz'
                       ],
     license='Apache License, Version 2.0',
