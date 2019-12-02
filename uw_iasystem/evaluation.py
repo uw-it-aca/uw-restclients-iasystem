@@ -183,12 +183,6 @@ def get_response_rate(data):
     return float(str(response_rate) if response_rate else '0')
 
 
-def get_is_online(data):
-    if get_value_by_name(data, 'deliveryMethod') == "Online":
-        return True
-    return False
-
-
 def _datetime_from_string(date_string):
     if date_string is not None and len(date_string):
         return parse(date_string)
