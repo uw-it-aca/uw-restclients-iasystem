@@ -1,3 +1,6 @@
+# Copyright 2021 UW-IT, University of Washington
+# SPDX-License-Identifier: Apache-2.0
+
 from unittest import TestCase
 from uw_iasystem.dao import (
     IASystem_DAO, IASystem_UW_DAO, IASystem_UWB_DAO, IASystem_UWT_DAO,
