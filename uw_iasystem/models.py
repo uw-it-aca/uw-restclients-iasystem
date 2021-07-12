@@ -1,6 +1,8 @@
 # Copyright 2021 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+import json
+from datetime import datetime
 from restclients_core import models
 
 
@@ -70,15 +72,12 @@ class Evaluation(models.Model):
         return {
             "domain": self.domain,
             "section_sln": self.section_sln,
-            "eval_open_date": (str(self.eval_open_date)
-                               if self.eval_open_date else None),
-            "eval_close_date": (str(self.eval_close_date)
-                                if self.eval_close_date else None),
+            "eval_open_date": date_to_str(self.eval_open_date),
+            "eval_close_date": date_to_str(self.eval_close_date),
             "eval_status": self.eval_status,
             "eval_url": self.eval_url,
             "report_url": self.report_url,
-            "report_available_date": (str(self.report_available_date)
-                                      if self.report_available_date else None),
+            "report_available_date": date_to_str(self.report_available_date),
             "response_rate": self.response_rate,
             "delivery_method": self.delivery_method,
             "is_completed": self.is_completed,
@@ -94,4 +93,10 @@ class Evaluation(models.Model):
         }
 
     def __str__(self):
-        return str(self.json_data())
+        return json.dumps(self.json_data())
+
+
+def date_to_str(dt):
+    return (
+        dt.isoformat() if dt is not None and isinstance(dt, datetime)
+        else None)
