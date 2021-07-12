@@ -54,6 +54,28 @@ class IASystemTest(TestCase):
         self.assertEqual(evals[0].eval_url,
                          "https://uw.iasysdev.org/survey/132068")
         self.assertIsNone(evals[0].is_completed)
+        self.assertEqual(evals[0].json_data(),
+                         {'delivery_method': 'Online',
+                          'domain': 'uw',
+                          'eval_close_date': '2051-12-03T07:59:59+00:00',
+                          'eval_open_date': '2014-11-24T15:00:00+00:00',
+                          'eval_status': 'Open',
+                          'eval_url': 'https://uw.iasysdev.org/survey/132068',
+                          'is_bothell': False,
+                          'is_closed': False,
+                          'is_completed': None,
+                          'is_eo_ap': False,
+                          'is_eo_ielp': False,
+                          'is_online': True,
+                          'is_open': True,
+                          'is_pending': False,
+                          'is_seattle': True,
+                          'is_tacoma': False,
+                          'report_available_date': None,
+                          'report_url': None,
+                          'response_rate': 0.0,
+                          'section_sln': 15314})
+        self.assertIsNotNone(str(evals[0].json_data()))
 
         self.assertEqual(evals[1].eval_status, "Closed")
         self.assertTrue(evals[1].is_closed())
