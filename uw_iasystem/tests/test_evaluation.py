@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import datetime
-import pytz
 from unittest import TestCase
 from restclients_core.exceptions import DataFailureException
 from uw_iasystem.exceptions import TermEvalNotCreated
@@ -44,11 +43,11 @@ class IASystemTest(TestCase):
         self.assertEqual(evals[0].eval_open_date,
                          datetime.datetime(2014, 11, 24,
                                            15, 0,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertEqual(evals[0].eval_close_date,
                          datetime.datetime(2051, 12, 3,
                                            7, 59, 59,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertEqual(evals[0].eval_status, "Open")
         self.assertTrue(evals[0].is_open())
         self.assertEqual(evals[0].eval_url,
@@ -102,7 +101,7 @@ class IASystemTest(TestCase):
         self.assertEqual(evals[0].report_available_date,
                          datetime.datetime(2051, 3, 1,
                                            7, 59, 59,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertEqual(evals[0].eval_status, "Open")
         self.assertEqual(evals[0].report_url,
                          "https://uw.iasysdev.org/report/132068")
@@ -136,11 +135,11 @@ class IASystemTest(TestCase):
         self.assertEqual(evals[0].eval_open_date,
                          datetime.datetime(2015, 3, 13,
                                            14, 0,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertEqual(evals[0].eval_close_date,
                          datetime.datetime(2015, 3, 21,
                                            6, 59, 59,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertEqual(evals[0].eval_url,
                          "https://uw.iasystem.org/survey/141412")
         self.assertIsNone(evals[0].is_completed)
@@ -190,29 +189,29 @@ class IASystemTest(TestCase):
         self.assertEqual(evals[0].eval_open_date,
                          datetime.datetime(2013, 5, 30,
                                            15, 0, 0,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertEqual(evals[0].eval_close_date,
                          datetime.datetime(2013, 7, 1,
                                            7, 59, 59,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertFalse(evals[0].is_completed)
         self.assertEqual(evals[1].eval_open_date,
                          datetime.datetime(2013, 6, 5,
                                            7, 0, 0,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertEqual(evals[1].eval_close_date,
                          datetime.datetime(2013, 6, 17,
                                            6, 59, 59,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertFalse(evals[1].is_completed)
         self.assertEqual(evals[2].eval_open_date,
                          datetime.datetime(2013, 6, 10,
                                            7, 0, 0,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertEqual(evals[2].eval_close_date,
                          datetime.datetime(2013, 6, 19,
                                            6, 59, 59,
-                                           tzinfo=pytz.utc))
+                                           tzinfo=datetime.timezone.utc))
         self.assertTrue(evals[2].is_completed)
 
     def test_search_eval_by_instructor(self):
