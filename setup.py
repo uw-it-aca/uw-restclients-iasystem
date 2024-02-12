@@ -1,4 +1,4 @@
-# Copyright 2023 UW-IT, University of Washington
+# Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 import os
@@ -20,12 +20,11 @@ setup(
     name='UW-RestClients-IASystem',
     version=VERSION,
     packages=['uw_iasystem'],
-    author="UW-IT AXDD",
+    author="UW-IT T&LS",
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires=['UW-RestClients-Core',
-                      'python-dateutil',
-                      'pytz'
+                      'python-dateutil'
                       ],
     license='Apache License, Version 2.0',
     description=('A library for connecting to the IASystem API'),
@@ -36,6 +35,5 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.8',
     ],
 )
